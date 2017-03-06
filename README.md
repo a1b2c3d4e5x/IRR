@@ -4,7 +4,7 @@ The internal rate of return function in swift 3.0.
 
 ### Usage
 
-	var cashFlow = [Int]()
+	var cashFlow = [Double]()
 	cashFlow.append(-300000)
 	cashFlow.append(0)
 	cashFlow.append(0)
@@ -18,7 +18,7 @@ The internal rate of return function in swift 3.0.
 	cashFlow.append(0)
 	cashFlow.append(360000)
 	let irr = IRR.computeIRR(cashFlows: cashFlow) {
-    	// Present values.
+    	// $0 = Present values.
     }
 
 	// 0.018106189979535267
