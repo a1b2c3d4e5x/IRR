@@ -23,7 +23,7 @@ public class IRR {
         var guessRate0: Double = 0.1;   // Default: 10%
         var guessRate1: Double = 0;
         var derivative: Double = 0;
-        var nowCast: Double = 0.0;
+        var nowCash: Double = 0.0;
         var npv: Double = 0;
 
         let numOfFlows = cashFlows.count;
@@ -35,12 +35,12 @@ public class IRR {
             for j in 0 ..< numOfFlows {
                 
                 // cashFlows[j] 的現今價值
-                nowCast = (Double(cashFlows[j]) / pow(1 + guessRate0, Double(j)));
-                print("nowCast: \(nowCast)")
+                nowCash = (Double(cashFlows[j]) / pow(1 + guessRate0, Double(j)));
+                //print("nowCash: \(nowCash)")
                 
                 // 損益差
-                npv = npv + nowCast;
-                print("npv: \(npv)")
+                npv = npv + nowCash;
+                //print("npv: \(npv)")
                 
                 derivative += (Double(-j * cashFlows[j]) / pow(1.0 + guessRate0, Double(j + 1)));
             }
