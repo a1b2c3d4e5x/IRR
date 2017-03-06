@@ -13,7 +13,7 @@ import Foundation
  */
 public class IRR {
         
-    static func computeIRR(cashFlows:[Int]) -> Double? {
+    static func computeIRR(cashFlows:[Double], presentValues: (([Double]) -> ())? = nil) -> Double? {
     
         // const
         let MAX_ITERATION = 1000        // Max Iteration
@@ -21,12 +21,14 @@ public class IRR {
         
         // variable
         var guessRate0: Double = 0.1;   // Default: 10%
-        var guessRate1: Double = 0;
-        var derivative: Double = 0;
+        var guessRate1: Double = 0.0;
+        var derivative: Double = 0.0;
         var nowCash: Double = 0.0;
-        var npv: Double = 0;
-
+        var npv: Double = 0.0;
+        
         let numOfFlows = cashFlows.count;
+        var nowCashs = [Double?](repeating: nil, count: numOfFlows)
+        
         for _ in 0 ..< MAX_ITERATION {
             
             npv = 0.0;
@@ -34,27 +36,27 @@ public class IRR {
             
             for j in 0 ..< numOfFlows {
                 
-                // cashFlows[j] 的現今價值
-                nowCash = (Double(cashFlows[j]) / pow(1 + guessRate0, Double(j)));
-                //print("nowCash: \(nowCash)")
-                
-                // 損益差
+                nowCash = (cashFlows[j] / pow(1 + guessRate0, Double(j)));
                 npv = npv + nowCash;
-                //print("npv: \(npv)")
                 
-                derivative += (Double(-j * cashFlows[j]) / pow(1.0 + guessRate0, Double(j + 1)));
+                derivative += (Double(-j) * cashFlows[j] / pow(1 + guessRate0, Double(j + 1)));
+                
+                if nil != presentValues { nowCashs[j] = nowCash }
             }
             
             guessRate1 = guessRate0 - (npv / derivative);
             
-            // 收斂到 0.0000001 以內
             if (PRECISION_REQ >= abs(guessRate1 - guessRate0)) {
+                
+                presentValues?(nowCashs as! [Double])
+                if nil != presentValues { nowCashs.removeAll() }
                 return guessRate1;
             }
             
             guessRate0 = guessRate1;
         }
         
+        if nil != presentValues { nowCashs.removeAll() }
         return nil
     }
 }

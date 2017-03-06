@@ -32,6 +32,7 @@ class FinancialFunctionTests: XCTestCase {
         IRR.test6()
         IRR.test7()
         IRR.test8()
+        IRR.test9()
     }
     
     func testPerformanceExample() {

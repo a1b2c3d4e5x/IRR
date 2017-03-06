@@ -11,7 +11,7 @@ import Foundation
 extension IRR {
     static func test1() {
         
-        var cf = [Int]()
+        var cf = [Double]()
         cf.append(-224988)
         cf.append(34662)
         cf.append(34312)
@@ -45,7 +45,7 @@ extension IRR {
     /// 第四年拿回 5, 098 配息
     /// 第五年拿回配息與賣股票共 91, 916
     static func test2() {
-        var cf = [Int]()
+        var cf = [Double]()
         cf.append(-61020)
         cf.append(3580)
         cf.append(4686)
@@ -62,7 +62,7 @@ extension IRR {
     /// 每一年初繳 30,250
     /// 到第六年時領回 100,000 元
     static func test3() {
-        var cf = [Int]()
+        var cf = [Double]()
         cf.append(-30250)
         cf.append(-30250)
         cf.append(-30250)
@@ -81,7 +81,7 @@ extension IRR {
     /// 每期繳款 18,458 元
     static func test4() {
         
-        var cf = [Int]()
+        var cf = [Double]()
         cf.append(400000)
         cf.append(-18458)
         cf.append(-18458)
@@ -122,7 +122,7 @@ extension IRR {
     /// 最後於第 11 個月時以 30 元賣出所剩 12 張股票。
     static func test5() {
         
-        var cf = [Int]()
+        var cf = [Double]()
         cf.append(-300000)
         cf.append(0)
         cf.append(0)
@@ -146,7 +146,7 @@ extension IRR {
     /// 一年後拿回 103 萬
     static func test6() {
         
-        var cf = [Int]()
+        var cf = [Double]()
         cf.append(-1000000)
         cf.append(0)
         cf.append(0)
@@ -168,7 +168,7 @@ extension IRR {
     
     static func test7() {
         
-        var cf = [Int]()
+        var cf = [Double]()
         cf.append(-128400)
         cf.append(30000)
         cf.append(30000)
@@ -183,7 +183,7 @@ extension IRR {
     
     static func test8() {
         
-        var cf = [Int]()
+        var cf = [Double]()
         cf.append(30000)
         cf.append(30000)
         cf.append(30000)
@@ -194,5 +194,21 @@ extension IRR {
         
         // -0.05138803738982415
         assert("-0.051388037" == irr, "Error: \(#function), value: \(irr)")
+    }
+    
+    static func test9() {
+        
+        var cf = [Double]()
+        cf.append(300.5)
+        cf.append(300.4)
+        cf.append(300.1)
+        cf.append(300.25)
+        cf.append(-300.74)
+        cf.append(240.74)
+        cf.append(-1284.3)
+        let irr = IRR.computeIRR(cashFlows: cf)?.decimal(.´9´);
+        
+        // 0.026890711506633341
+        assert("0.026890712" == irr, "Error: \(#function), value: \(irr)")
     }
 }
